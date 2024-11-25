@@ -1,0 +1,79 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class RecruitmentAgencyTest {
+
+    private RecruitmentAgency form;
+
+    @BeforeEach
+    public void setUp() {
+        // Инициализация формы перед каждым тестом
+        form = new RecruitmentAgency();
+    }
+
+    @Test
+    public void testFindVacancies_ValidData() {
+        // Подготовка данных
+        String name = "Иван Иванов";
+        String position = "Менеджер";
+        String employment = "Штат";
+        String education = "Высшее";
+        String specialty = "Инженер";
+
+        // Вызов метода для поиска вакансий
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+
+        // Ожидаемый результат
+        String expected = "Уважаемый(ая) Иван Иванов, подходящие вакансии:\n- Менеджер: 100,000 руб.\n";
+        
+        assertEquals(expected, result, "Результаты должны совпадать");
+    }
+
+    @Test
+    public void testFindVacancies_NoMatch() {
+        // Подготовка данных, которые не имеют совпадений
+        String name = "Елена Иванова";
+        String position = "Программист";
+        String employment = "ГПХ";
+        String education = "Среднее";
+        String specialty = "Юрист";
+
+        // Вызов метода для поиска вакансий
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+
+        // Ожидаемый результат, если вакансий нет
+        String expected = "Уважаемый(ая) Елена Иванова, подходящие вакансии:\nНет подходящих вакансий.";
+
+        assertEquals(expected, result, "Должно быть сообщение о том, что нет вакансий");
+    }
+
+    @Test
+    public void testFindVacancies_EducationError() {
+        // Подготовка данных с ошибкой
+        String name = "Иван Иванов";
+        String position = "Менеджер";
+        String employment = "Штат";
+        String education = "Не высшее";
+        String specialty = "Инженер";
+
+        // Вызов метода для поиска вакансий
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+
+        // Ожидаемый результат
+        String expected = "Пожалуйста, заполните все поля!";
+
+        assertEquals(expected, result, "Результаты должны быть ошибочными, так как образование не соответствует");
+    }
+
+    @Test
+    public void testFindVacancies_EmptyFields() {
+        // Проверяем работу метода с пустыми полями
+        String result = RecruitmentAgency.findVacancies("", "", "", "", "");
+
+        // Ожидаемый результат - пустые поля должны вызвать ошибку
+        String expected = "Пожалуйста, заполните все поля!";
+
+        assertEquals(expected, result, "Должно быть сообщение о пустых полях");
+    }
+}

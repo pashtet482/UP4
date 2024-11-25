@@ -1,0 +1,190 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class RecruitmentAgency {
+	
+    public static void main(String[] args) {
+        // Создание основного окна
+        JFrame frame = new JFrame("Кадровое агентство");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 400);
+
+        // Установка layout
+        frame.setLayout(new GridLayout(8, 2, 10, 10));
+
+        // Поля ввода данных
+        JLabel nameLabel = new JLabel("Имя:");
+        JTextField nameField = new JTextField();
+
+        JLabel positionLabel = new JLabel("Искомая должность:");
+        JComboBox<String> positionBox = new JComboBox<>(new String[]{"Менеджер",
+        		"Программист",
+        		"Дизайнер",
+        		"Маркетолог",
+        		"Системный администратор",
+        		"Контент-менеджер",
+        		"Юрист",
+        		"Экономист",
+        		"Тестировщик"
+        	});
+
+        JLabel employmentLabel = new JLabel("Тип занятости:");
+        JRadioButton fullTimeButton = new JRadioButton("Штат");
+        JRadioButton freelanceButton = new JRadioButton("ГПХ");
+        ButtonGroup employmentGroup = new ButtonGroup();
+        employmentGroup.add(fullTimeButton);
+        employmentGroup.add(freelanceButton);
+
+        JLabel educationLabel = new JLabel("Образование:");
+        JRadioButton higherButton = new JRadioButton("Высшее");
+        JRadioButton secondaryButton = new JRadioButton("Среднее");
+        ButtonGroup educationGroup = new ButtonGroup();
+        educationGroup.add(higherButton);
+        educationGroup.add(secondaryButton);
+
+        JLabel specialtyLabel = new JLabel("Специальность:");
+        JComboBox<String> specialtyBox = new JComboBox<>(new String[]{
+        	    "Инженер", 
+        	    "Юрист", 
+        	    "Экономист", 
+        	    "Маркетолог", 
+        	    "Системный администратор", 
+        	    "Дизайнер", 
+        	    "Тестировщик", 
+        	    "Контент-менеджер"
+        	});
+
+        JButton resultButton = new JButton("Показать вакансии");
+
+        // Добавление компонентов на форму
+        frame.add(nameLabel);
+        frame.add(nameField);
+        frame.add(positionLabel);
+        frame.add(positionBox);
+        frame.add(employmentLabel);
+        frame.add(fullTimeButton);
+        frame.add(new JLabel());
+        frame.add(freelanceButton);
+        frame.add(educationLabel);
+        frame.add(higherButton);
+        frame.add(new JLabel());
+        frame.add(secondaryButton);
+        frame.add(specialtyLabel);
+        frame.add(specialtyBox);
+        frame.add(resultButton);
+
+        // Логика обработки нажатия кнопки
+        resultButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameField.getText().trim();
+                String position = (String) positionBox.getSelectedItem();
+                String employment = fullTimeButton.isSelected() ? "Штат" : (freelanceButton.isSelected() ? "ГПХ" : null);
+                String education = higherButton.isSelected() ? "Высшее" : (secondaryButton.isSelected() ? "Среднее" : null);
+                String specialty = (String) specialtyBox.getSelectedItem();
+
+                // Проверка на заполненность полей
+                if (name.isEmpty() || employment == null || education == null) {
+                    JOptionPane.showMessageDialog(frame, "Пожалуйста, заполните все поля!", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Данные о вакансиях
+                String[][] vacancies = {
+                	    {"Менеджер", "Штат", "Высшее", "50,000 руб."},
+                	    {"Программист", "Штат", "Высшее", "100,000 руб."},
+                	    {"Дизайнер", "ГПХ", "Среднее", "70,000 руб."},
+                	    {"Маркетолог", "Штат", "Высшее", "60,000 руб."},
+                	    {"Системный администратор", "Штат", "Высшее", "90,000 руб."},
+                	    {"Контент-менеджер", "ГПХ", "Среднее", "40,000 руб."},
+                	    {"Юрист", "Штат", "Высшее", "80,000 руб."},
+                	    {"Экономист", "ГПХ", "Высшее", "75,000 руб."},
+                	    {"Тестировщик", "Штат", "Среднее", "55,000 руб."},
+                	    {"Инженер", "Штат", "Высшее", "85,000 руб."},
+                	    {"Архитектор", "ГПХ", "Высшее", "120,000 руб."},
+                	    {"Бухгалтер", "Штат", "Высшее", "65,000 руб."},
+                	    {"HR-специалист", "Штат", "Высшее", "55,000 руб."},
+                	    {"Копирайтер", "ГПХ", "Среднее", "45,000 руб."},
+                	    {"SEO-специалист", "ГПХ", "Высшее", "70,000 руб."},
+                	    {"Продакт-менеджер", "Штат", "Высшее", "110,000 руб."},
+                	    {"Аналитик данных", "Штат", "Высшее", "95,000 руб."},
+                	    {"Специалист техподдержки", "ГПХ", "Среднее", "50,000 руб."},
+                	    {"Разработчик игр", "Штат", "Высшее", "150,000 руб."},
+                	    {"Учитель", "Штат", "Высшее", "40,000 руб."},
+                	    {"Водитель", "ГПХ", "Среднее", "35,000 руб."},
+                	    {"Механик", "Штат", "Среднее", "45,000 руб."},
+                	    {"Оператор колл-центра", "ГПХ", "Среднее", "30,000 руб."},
+                	    {"Веб-дизайнер", "ГПХ", "Среднее", "65,000 руб."},
+                	    {"PR-менеджер", "Штат", "Высшее", "75,000 руб."},
+                	    {"Event-менеджер", "ГПХ", "Высшее", "60,000 руб."},
+                	    {"Медицинский представитель", "Штат", "Высшее", "90,000 руб."},
+                	    {"Фармацевт", "Штат", "Высшее", "85,000 руб."},
+                	    {"Повар", "ГПХ", "Среднее", "40,000 руб."},
+                	    {"Бариста", "ГПХ", "Среднее", "35,000 руб."}
+                	};
+
+
+                // Поиск подходящих вакансий
+                StringBuilder result = new StringBuilder("Уважаемый(ая) " + name + ", подходящие вакансии:\n");
+                boolean found = false;
+
+                for (String[] vacancy : vacancies) {
+                    if (vacancy[0].equals(position) && vacancy[1].equals(employment) && vacancy[2].equals(education)) {
+                        result.append("- ").append(vacancy[0]).append(": ").append(vacancy[3]).append("\n");
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    result.append("Нет подходящих вакансий.");
+                }
+
+                // Отображение результата
+                JOptionPane.showMessageDialog(frame, result.toString(), "Результат", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        // Показ окна
+        frame.setVisible(true);
+    }
+    
+    //
+    public static String findVacancies(String name, String position, String employment, String education) {
+        if (name == null || name.isEmpty() || employment == null || education == null) {
+            return "Пожалуйста, заполните все поля!";
+        }
+
+        // Данные о вакансиях
+        String[][] vacancies = {
+            {"Менеджер", "Штат", "Высшее", "50,000 руб."},
+            {"Программист", "Штат", "Высшее", "100,000 руб."},
+            {"Дизайнер", "ГПХ", "Среднее", "70,000 руб."},
+            {"Маркетолог", "Штат", "Высшее", "60,000 руб."},
+            {"Системный администратор", "Штат", "Высшее", "90,000 руб."},
+            {"Контент-менеджер", "ГПХ", "Среднее", "40,000 руб."},
+            {"Юрист", "Штат", "Высшее", "80,000 руб."},
+            {"Экономист", "ГПХ", "Высшее", "75,000 руб."},
+            {"Тестировщик", "Штат", "Среднее", "55,000 руб."}
+        };
+
+        // Поиск подходящих вакансий
+        StringBuilder result = new StringBuilder("Уважаемый(ая) " + name + ", подходящие вакансии:\n");
+        boolean found = false;
+
+        for (String[] vacancy : vacancies) {
+            if (vacancy[0].equals(position) && vacancy[1].equals(employment) && vacancy[2].equals(education)) {
+                result.append("- ").append(vacancy[0]).append(": ").append(vacancy[3]).append("\n");
+                found = true;
+            }
+        }
+
+        if (!found) {
+            result.append("Нет подходящих вакансий.");
+        }
+
+        return result.toString();
+    }
+
+}

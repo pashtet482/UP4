@@ -1,0 +1,43 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class RecruitmentAgencyTest {
+
+    @Test
+    public void testFindVacanciesValidData() {
+        String result = RecruitmentAgency.findVacancies("Иван", "Инженер", "Штат", "Высшее", "100,000 руб.");
+        assertTrue(result.contains("Инженер"));
+        assertTrue(result.contains("100,000 руб."));
+    }
+
+    @Test
+    public void testFindVacanciesNoResults() {
+        String result = RecruitmentAgency.findVacancies("Иван", "Инженер", "ГПХ", "Высшее", "200,000 руб.");
+        assertTrue(result.contains("Нет подходящих вакансий"));
+    }
+
+    @Test
+    public void testFindVacanciesEmptyName() {
+        String result = RecruitmentAgency.findVacancies("", "Инженер", "Штат", "Высшее", "100,000 руб.");
+        assertEquals("Пожалуйста, заполните все поля!", result);
+    }
+
+    @Test
+    public void testFindVacanciesEmptySpecialty() {
+        String result = RecruitmentAgency.findVacancies("Иван", "Инженер", "Штат", "Высшее", "");
+        assertEquals("Пожалуйста, заполните все поля!", result);
+    }
+
+    @Test
+    public void testFindVacanciesEmptyPosition() {
+        String result = RecruitmentAgency.findVacancies("Иван", "", "Штат", "Высшее", "100,000 руб.");
+        assertTrue(result.contains("Нет подходящих вакансий"));
+    }
+
+    @Test
+    public void testFindVacanciesDifferentEducation() {
+        String result = RecruitmentAgency.findVacancies("Иван", "Инженер", "Штат", "Среднее", "80,000 руб.");
+        assertTrue(result.contains("Инженер"));
+        assertTrue(result.contains("80,000 руб."));
+    }
+}

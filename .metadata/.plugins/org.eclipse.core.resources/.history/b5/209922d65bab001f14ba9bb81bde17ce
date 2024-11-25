@@ -1,0 +1,87 @@
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class RecruitmentAgencyTest {
+
+    // Тест 1: Проверка на наличие подходящих вакансий
+    @Test
+    public void testFindVacancies_withMatchingCriteria() {
+        // Пример данных
+        String name = "Иван";
+        String position = "Инженер";
+        String employment = "Штат";
+        String education = "Высшее";
+        String specialty = "Инженер";
+
+        // Ожидаемый результат
+        String expected = "Уважаемый(ая) Иван, подходящие вакансии:\n" +
+                          "- Инженер: 100,000 руб.\n";
+
+        // Вызов метода
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+
+        // Проверка результата
+        assertEquals(expected, result);
+    }
+
+    // Тест 2: Проверка на отсутствие подходящих вакансий
+    @Test
+    public void testFindVacancies_noMatchingVacancies() {
+        // Пример данных
+        String name = "Мария";
+        String position = "Юрист";
+        String employment = "ГПХ";
+        String education = "Среднее";
+        String specialty = "Дизайнер";  // Не совпадает с вакансией
+
+        // Ожидаемый результат
+        String expected = "Уважаемый(ая) Мария, подходящие вакансии:\n" +
+                          "Нет подходящих вакансий.";
+
+        // Вызов метода
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+
+        // Проверка результата
+        assertEquals(expected, result);
+    }
+
+    // Тест 3: Проверка на незаполненные обязательные поля
+    @Test
+    public void testFindVacancies_withEmptyFields() {
+        // Пример данных с пустым полем (например, имя)
+        String name = "";
+        String position = "Программист";
+        String employment = "Штат";
+        String education = "Высшее";
+        String specialty = "Программист";
+
+        // Ожидаемый результат
+        String expected = "Пожалуйста, заполните все поля!";
+
+        // Вызов метода
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+
+        // Проверка результата
+        assertEquals(expected, result);
+    }
+
+    // Тест 4: Проверка на частично заполненные поля
+    @Test
+    public void testFindVacancies_withPartialFields() {
+        // Пример данных с отсутствием типа занятости
+        String name = "Анна";
+        String position = "Маркетолог";
+        String employment = null;  // Не выбран тип занятости
+        String education = "Среднее";
+        String specialty = "Маркетолог";
+
+        // Ожидаемый результат
+        String expected = "Пожалуйста, заполните все поля!";
+
+        // Вызов метода
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+
+        // Проверка результата
+        assertEquals(expected, result);
+    }
+}

@@ -1,0 +1,53 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class RecruitmentAgencyTest {
+
+    @Test
+    public void testFindVacancies() {
+        // Тест 1: Проверка с корректными данными
+        String name = "Иван";
+        String position = "Инженер";
+        String employment = "Штат";
+        String education = "Высшее";
+        String specialty = "Инженер";
+
+        String expected = "Уважаемый(ая) Иван, подходящие вакансии:\n" +
+                          "- Инженер: 100,000 руб.\n" +
+                          "- Инженер: 80,000 руб.\n" +
+                          "- Инженер: 90,000 руб.\n" +
+                          "- Инженер: 85,000 руб.\n";
+        String actual = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        assertEquals(expected, actual);
+
+        // Тест 2: Нет подходящих вакансий
+        position = "Программист"; // Не совпадает с "Инженер"
+        expected = "Уважаемый(ая) Иван, подходящие вакансии:\nНет подходящих вакансий.";
+        actual = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        assertEquals(expected, actual);
+
+        // Тест 3: Пустое имя
+        name = "";
+        expected = "Пожалуйста, заполните все поля!";
+        actual = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        assertEquals(expected, actual);
+
+        // Тест 4: Не выбран тип занятости
+        employment = null;
+        expected = "Пожалуйста, заполните все поля!";
+        actual = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        assertEquals(expected, actual);
+
+        // Тест 5: Не выбран уровень образования
+        education = null;
+        expected = "Пожалуйста, заполните все поля!";
+        actual = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        assertEquals(expected, actual);
+
+        // Тест 6: Пустая специальность
+        specialty = "";
+        expected = "Пожалуйста, заполните все поля!";
+        actual = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        assertEquals(expected, actual);
+    }
+}

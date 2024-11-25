@@ -1,0 +1,69 @@
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class RecruitmentAgencyTest {
+
+    @Test
+    public void testFindVacancies_ValidData() {
+        // Тестирование с корректными данными
+        String result = RecruitmentAgency.findVacancies("Иван Иванов", "Программист", "Штат", "Высшее", "Инженер");
+        String expected = "Уважаемый(ая) Иван Иванов, подходящие вакансии:\n- Программист: 100,000 руб.\n";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFindVacancies_NoMatchingPosition() {
+        // Тестирование, когда нет подходящей позиции
+        String result = RecruitmentAgency.findVacancies("Мария Смирнова", "Дизайнер", "ГПХ", "Среднее", "Дизайнер");
+        String expected = "Уважаемый(ая) Мария Смирнова, подходящие вакансии:\n- Дизайнер: 70,000 руб.\n";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFindVacancies_NoMatchingEmployment() {
+        // Тестирование, когда нет подходящей вакансии по типу занятости
+        String result = RecruitmentAgency.findVacancies("Алексей Васильев", "Менеджер", "ГПХ", "Высшее", "Экономист");
+        String expected = "Уважаемый(ая) Алексей Васильев, подходящие вакансии:\nНет подходящих вакансий.";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFindVacancies_NoMatchingEducation() {
+        // Тестирование, когда нет подходящей вакансии по образованию
+        String result = RecruitmentAgency.findVacancies("Оля Кузнецова", "Маркетолог", "Штат", "Среднее", "Маркетолог");
+        String expected = "Уважаемый(ая) Оля Кузнецова, подходящие вакансии:\nНет подходящих вакансий.";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFindVacancies_NoMatchingSpecialty() {
+        // Тестирование, когда нет подходящей вакансии по специальности
+        String result = RecruitmentAgency.findVacancies("Екатерина Романова", "Юрист", "Штат", "Высшее", "Дизайнер");
+        String expected = "Уважаемый(ая) Екатерина Романова, подходящие вакансии:\nНет подходящих вакансий.";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFindVacancies_EmptyFields() {
+        // Тестирование, когда не заполнены обязательные поля
+        String result = RecruitmentAgency.findVacancies("", "Программист", "Штат", "Высшее", "Инженер");
+        String expected = "Пожалуйста, заполните все поля!";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFindVacancies_ValidSearchMultipleVacancies() {
+        // Тестирование, когда есть несколько подходящих вакансий
+        String result = RecruitmentAgency.findVacancies("Иван Иванов", "Программист", "Штат", "Высшее", "Инженер");
+        String expected = "Уважаемый(ая) Иван Иванов, подходящие вакансии:\n- Программист: 100,000 руб.\n";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFindVacancies_NoMatchingVacancies() {
+        // Тестирование, когда нет вакансий, соответствующих всем критериям
+        String result = RecruitmentAgency.findVacancies("Анна Петрова", "Менеджер", "ГПХ", "Среднее", "Инженер");
+        String expected = "Уважаемый(ая) Анна Петрова, подходящие вакансии:\nНет подходящих вакансий.";
+        assertEquals(expected, result);
+    }
+}

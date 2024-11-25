@@ -1,0 +1,58 @@
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class RecruitmentAgencyTest {
+
+    @Test
+    public void testFindVacancies() {
+        String name = "Иван";
+        String position = "Дизайнер";
+        String employment = "Штат";
+        String education = "Высшее";
+        String specialty = "Дизайнер";
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertTrue(result.contains("Инженер"));
+        assertTrue(result.contains("100,000 руб."));
+    }
+
+    @Test
+    public void testFindVacanciesWithNoMatch() {
+        String name = "Мария";
+        String position = "Менеджер";
+        String employment = "ГПХ";
+        String education = "Среднее";
+        String specialty = "Тестировщик";
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertTrue(result.contains("Нет подходящих вакансий"));
+    }
+
+    @Test
+    public void testFindVacanciesWithEmptyFields() {
+        String name = "";
+        String position = "Юрист";
+        String employment = "Штат";
+        String education = "Высшее";
+        String specialty = "Юрист";
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertTrue(result.contains("Пожалуйста, заполните все поля"));
+    }
+
+    @Test
+    public void testFindVacanciesWithInvalidSpecialty() {
+        String name = "Алексей";
+        String position = "Экономист";
+        String employment = "ГПХ";
+        String education = "Высшее";
+        String specialty = "Неизвестная специальность";
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertTrue(result.contains("Нет подходящих вакансий"));
+    }
+}

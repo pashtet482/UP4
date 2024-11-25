@@ -1,0 +1,73 @@
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class RecruitmentAgencyTest {
+
+    @Test
+    public void testFindVacancies() {
+        String name = "Иван";
+        String position = "Инженер";
+        String employment = "Штат";
+        String education = "Высшее";
+        String specialty = "Инженер";
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertTrue(result.contains("Инженер"));
+        assertTrue(result.contains("100,000 руб."));
+    }
+
+    @Test
+    public void testFindVacanciesWithNoMatch() {
+        String name = "Мария";
+        String position = "Менеджер";
+        String employment = "ГПХ";
+        String education = "Среднее";
+        String specialty = "Тестировщик";
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertTrue(result.contains("Нет подходящих вакансий"));
+    }
+
+    @Test
+    public void testFindVacanciesWithEmptyFields() {
+        String name = "";
+        String position = "Юрист";
+        String employment = "Штат";
+        String education = "Высшее";
+        String specialty = "Юрист";
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertEquals(result, "Пожалуйста, заполните все поля!");
+    }
+
+    @Test
+    public void testFindVacanciesWithNullSpecialty() {
+        String name = "Алексей";
+        String position = "Экономист";
+        String employment = "ГПХ";
+        String education = "Высшее";
+        String specialty = null;
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertEquals(result, "Пожалуйста, заполните все поля!");
+    }
+
+    @Test
+    public void testFindVacanciesWithMultipleResults() {
+        String name = "Елена";
+        String position = "Тестировщик";
+        String employment = "ГПХ";
+        String education = "Среднее";
+        String specialty = "Тестировщик";
+
+        String result = RecruitmentAgency.findVacancies(name, position, employment, education, specialty);
+        
+        assertTrue(result.contains("Тестировщик"));
+        assertTrue(result.contains("75,000 руб."));
+        assertTrue(result.contains("65,000 руб."));
+    }
+}

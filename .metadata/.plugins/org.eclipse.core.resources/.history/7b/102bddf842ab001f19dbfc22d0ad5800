@@ -1,0 +1,37 @@
+public class RecruitmentAgencyLogic {
+
+    public static String findVacancies(String name, String position, String employment, String education) {
+        if (name == null || name.isEmpty() || employment == null || education == null) {
+            return "Пожалуйста, заполните все поля!";
+        }
+
+        // Вакансии
+        String[][] vacancies = {
+            {"Менеджер", "Штат", "Высшее", "50,000 руб."},
+            {"Программист", "Штат", "Высшее", "100,000 руб."},
+            {"Дизайнер", "ГПХ", "Среднее", "70,000 руб."},
+            {"Маркетолог", "Штат", "Высшее", "60,000 руб."},
+            {"Системный администратор", "Штат", "Высшее", "90,000 руб."},
+            {"Контент-менеджер", "ГПХ", "Среднее", "40,000 руб."},
+            {"Юрист", "Штат", "Высшее", "80,000 руб."},
+            {"Экономист", "ГПХ", "Высшее", "75,000 руб."},
+            {"Тестировщик", "Штат", "Среднее", "55,000 руб."}
+        };
+
+        StringBuilder result = new StringBuilder("Уважаемый(ая) " + name + ", подходящие вакансии:\n");
+        boolean found = false;
+
+        for (String[] vacancy : vacancies) {
+            if (vacancy[0].equals(position) && vacancy[1].equals(employment) && vacancy[2].equals(education)) {
+                result.append("- ").append(vacancy[0]).append(": ").append(vacancy[3]).append("\n");
+                found = true;
+            }
+        }
+
+        if (!found) {
+            result.append("Нет подходящих вакансий.");
+        }
+
+        return result.toString();
+    }
+}
